@@ -1,0 +1,137 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<title>TFE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% static "tfe.css" %}">
+<style>
+.mySlides {display:none}
+.demo {cursor:pointer}
+</style>
+<body>
+
+<div class="w3-container;text-align:center">
+	<table style='text-align:center;width:100%;'>
+		<tr>	
+			<td>
+				<img src="{% static 'ressources/mine2.jpg' %}" style="width:50px;height:40px">
+			</td>
+			<td>
+				<img src="{% static 'ressources/foret2.jpg' %}" style="width:50px;height:40px">
+			</td>
+			<td>
+				<img src="{% static 'ressources/eau.png' %}" style="width:50px;height:40px">
+			</td>
+			<td>
+				<img src="{% static 'ressources/petrole.png' %}" style="width:50px;height:40px">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{{ mine }}
+			</td>
+			<td>
+				{{ bois }}
+			</td>
+			<td>
+				{{ eau }}
+			</td>
+			<td>
+				{{ petrol }}
+			</td>
+		</tr>
+	</table>
+<div class="w3-container">
+  <h2 style="text-align:center">Liste des {{ typeElement }}s disponibles</h2>	
+</div>
+
+{% for elem in elements %}
+<div class="w3-content" style="max-width:1200px">
+  <table class="mySlides" style="width:100%;min-height:410px">
+	<tr style="width:100%">
+		<td style="width:50%;min-height:200px">
+			<img src="{% static elem.0 %}" style="width: 100%;max-height:400px">
+		</td>
+		<td style="width:50%">
+			<table style="width:100%;text-align:center">
+				<tr>
+					<td colspan="4">Nécessite:</td>
+				</tr>
+				<tr>
+					<td>Minerais</td>
+					<td>Bois</td>
+					<td>Eau</td>
+					<td>Pétrole</td>
+				</tr>
+				<tr>
+					<td>{{ elem.1.mine }}</td>
+					<td>{{ elem.1.bois }}</td>
+					<td>{{ elem.1.eau }}</td>
+					<td>{{ elem.1.petrol }}</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+  </table>
+{% endfor %}
+
+  <div class="w3-row-padding w3-section">
+		{% for elem in elements %}
+    	<div class="w3-col s4">	
+      	<img class="demo w3-opacity w3-hover-opacity-off" src="{% static elem.0 %}" style="width:250px;height:300px" onclick="currentDiv({{ forloop.counter }})">
+    	</div>
+		{% endfor %}
+  </div>
+</div>
+
+<form action="/ressources/" method="post">
+{% csrf_token %}
+	<input id="mine" type="number" value="{{ elements.0.1.mine }}" name="mine" hidden>
+	<input id="bois" type="number" value="{{ elements.0.1.bois }}" name="bois" hidden>
+	<input id="eau" type="number" value="{{ elements.0.1.eau }}" name="eau" hidden>
+	<input id="petrol" type="number" value="{{ elements.0.1.petrol }}" name="petrol" hidden>
+	<input id="fichier" type="text" value="{{ elements.0.0 }}" name="fichier" hidden>
+	<input id="typeElement" type="text" value="{{ typeElement }}" name="typeElement" hidden>
+	<input type="submit" class="action-button shadow animate green" style="width:100%;text-align:center" value="Choisir">
+</form>
+
+<script>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function currentDiv(n) {
+  showDivs(slideIndex = n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+     dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+  }
+  x[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " w3-opacity-off";
+	var trtab = x[slideIndex - 1].getElementsByTagName("tr")[0].getElementsByTagName("td")[1].getElementsByTagName("table")[0].getElementsByTagName("tr")[2].getElementsByTagName("td");
+	document.getElementById("mine").value = trtab[0].textContent;
+	document.getElementById("bois").value = trtab[1].textContent;
+	document.getElementById("eau").value = trtab[2].textContent;
+	document.getElementById("petrol").value = trtab[3].textContent;
+	document.getElementById("fichier").value = x[slideIndex - 1].getElementsByTagName("tr")[0].getElementsByTagName("td")[0].getElementsByTagName("img")[0].src.split("/").pop();
+}
+</script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,17 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<title>TFE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<link rel="stylesheet" type="text/css" href="{% static 'tfe.css' %}">
+</head>
+
+<h1 style="text-align: center">Tu as épuisé toutes tes ressources...</h1>
+<p style="text-align: center">
+    <img class="mySlides" src="{% static 'lose.jpg' %}" style="width:400px;height:400px">
+</p>
+<a href="/"><input type='button' class="action-button shadow animate blue" style="width:100%;text-align:center" value="Rejouer !"></a>
+
+</html>

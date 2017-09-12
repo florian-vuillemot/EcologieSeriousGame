@@ -1,0 +1,19 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<title>TFE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<link rel="stylesheet" type="text/css" href="{% static 'tfe.css' %}">
+</head>
+
+<h1 style="text-align: center">Construis ta maison à partir des ressources naturelles</h1>
+<p style="text-align: center">
+    <video width="800px" height="700px" autoplay loop type='video/mp4' src="{% static 'videos/terre.mp4' %}">
+    </video>
+
+</p>
+<a href="/construction"><input type='button' class="action-button shadow animate blue" style="width:100%;text-align:center" value="Jouer !"></a>
+
+</html>

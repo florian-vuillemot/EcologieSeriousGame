@@ -1,0 +1,4 @@
+eau:8
+bois:1
+mine:8
+petrol:8

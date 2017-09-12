@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<title>TFE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<link rel="stylesheet" type="text/css" href="{% static 'tfe.css' %}">
+</head>
+
+<body>
+<form action="/listeElements/" method="post">
+      {% csrf_token %}
+<div class="w3-content w3-display-container" style="height:10%">
+<a class="w3-btn-floating w3-display-left" onclick="plusDivs(-1)">&#10094;</a>
+    {% for e in element_maison %}
+        <div class="mySlides">
+            <p style="text-align: center">{{e.0 }}</p>
+            <img src="{% static e.1 %}" style="width:400px;height:400px;margin-left:30%" onclick="document.forms[0].submit()">
+        </div>
+    {% endfor %}
+  <a class="w3-btn-floating w3-display-right" onclick="plusDivs(1)">&#10095;</a>
+</div>
+
+<div style="text-align: center;margin-top:20px;margin-bottom: 20px">
+<img src="{% static maison %}" style="width:400px;height:400px;" align="middle">
+</div>
+
+<input type='number' value='0' id='nbSend' name="nbSend" hidden>
+<input type='submit' class="action-button shadow animate blue" style="width:100%;text-align:center" value="Ajouter cet élément">
+
+</form>
+<script>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";  
+  }
+  x[slideIndex-1].style.display = "block";  
+  document.getElementById("nbSend").value = slideIndex - 1;
+}
+</script>
+</body>
+
+</html>
+
